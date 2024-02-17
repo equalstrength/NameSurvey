@@ -1,0 +1,92 @@
+---
+page-layout: full
+from: markdown+emoji
+---
+
+# Quality checks
+
+```{r}
+# Import packages and working dataset
+source("WorkData.R")
+```
+
+## Repetition 
+
+```{r}
+#| tbl-cap: Absolute number of respondents who answered "Don't know" for all 10 names. 
+#| label: tbl-repdk
+
+df_es |>
+  mutate(
+    Sex_DK = if_else(as.numeric(V001a) == 4, 1, 0),
+    Region_DK = if_else(as.numeric(V001b) == 9, 1, 0),
+    Religion_DK = if_else(as.numeric(V001e) == 7, 1, 0),
+    Skin_DK = if_else(round == 2 & as.numeric(V001db) == 11, 1, 0)) |>
+  group_by(country_survey, id) |>
+  summarise(across(ends_with("DK"), mean),.groups = 'drop') |>
+  group_by(country_survey) |>
+  summarise(across(ends_with("DK"), ~sum(.x == 1)), .groups = 'drop') |>
+  gt() |>
+  cols_label_with(fn =  ~str_remove(., "_DK"))
+
+
+```
+
+
+```{r}
+#| tbl-cap: Absolute number of respondents who repeated the same answer for all 10 names. 
+#| label: tbl-rep
+
+df_es |>
+  group_by(country_survey, id) |>
+  summarise(across(c("V001a", "V001b", "V001e"), n_distinct),.groups = 'drop') |>
+  group_by(country_survey) |>
+  summarise(across(c("V001a", "V001b", "V001e"), ~sum(.x == 1)), .groups = 'drop') |>
+  gt() |>
+  cols_label(V001a = "Sex", V001b = "Region", V001e = "Religion")
+
+
+
+```
+
+
+## Demographics
+
+Here we check the difference in response pattern based on the **respondent's** demographic variables. The table below show the average region congruence rates for Nigerian names.
+
+```{r}
+#| tbl-cap: Average region congruence rate for Nigerian names by country and respondent's characteristics. 
+#| label: tbl-dem
+
+df_es <- 
+  df_es |>
+  mutate(resp_sex = case_match(VS1, 1 ~ "Male", 2 ~ "Female", .default = NA),
+          resp_edu = case_match(VS3, 1 ~ "No higher", 2 ~ "Higher", .default = NA),
+          resp_age = case_when(VS2 < 25 ~ "18-24", VS2 > 24 & VS2 < 46 ~ "25-45", VS2 > 45 ~ "46+")) 
+
+compare_cong <- function(country, group_comp){
+  df_es |> 
+    filter(country_name == country) |>
+    group_by(country_survey, Name, group = get(group_comp)) |>
+    summarise(region = get_mean(cong_region, Weging), .groups = 'drop') |>
+    filter(!is.na(group)) |>
+    group_by(country_survey, group) |>
+    summarise(mean = mean(region), .groups = 'drop') |>
+    pivot_wider(names_from = group, values_from = mean)
+}
+
+compare_cong("Nigeria", "resp_sex") |>
+  left_join(compare_cong("Nigeria", "resp_edu")) |>
+  left_join(compare_cong("Nigeria", "resp_age")) |>
+gt() |> 
+fmt_percent(decimals = 0) |>
+sub_missing() |>
+tab_spanner(label = "Sex", columns = c("Female", "Male")) |>
+tab_spanner(label = "Education", columns = c("Higher", "No higher")) |>
+tab_spanner(label = "Age group", columns = c("18-24", "25-45", "46+"))
+
+```
+
+## Average time
+
+**Placeholder for analysis on the time spent by respondent**
