@@ -104,6 +104,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/core-js-2.5.3/shim.min.js"></script>
+<script src="site_libs/react-18.2.0/react.min.js"></script>
+<script src="site_libs/react-18.2.0/react-dom.min.js"></script>
+<script src="site_libs/reactwidget-1.0.0/react-tools.js"></script>
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="site_libs/reactable-0.4.4/reactable.css" rel="stylesheet">
+<script src="site_libs/reactable-binding-0.4.4/reactable.js"></script>
 
 
 </head>
@@ -199,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#repetition" id="toc-repetition" class="nav-link active" data-scroll-target="#repetition"><span class="header-section-number">2.1</span> Repetition</a></li>
   <li><a href="#demographics" id="toc-demographics" class="nav-link" data-scroll-target="#demographics"><span class="header-section-number">2.2</span> Demographics</a></li>
-  <li><a href="#average-time" id="toc-average-time" class="nav-link" data-scroll-target="#average-time"><span class="header-section-number">2.3</span> Average time</a></li>
+  <li><a href="#time" id="toc-time" class="nav-link" data-scroll-target="#time"><span class="header-section-number">2.3</span> Time</a></li>
   </ul>
 </nav>
     </div>
@@ -229,7 +236,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import packages and working dataset</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"WorkData.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"WorkingDF.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="repetition" class="level2" data-number="2.1">
@@ -258,23 +265,23 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
 <div aria-describedby="tbl-repdk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div>
-<div id="ejptbufpic" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ejptbufpic table {
+<div id="umdfdtfsck" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#umdfdtfsck table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ejptbufpic thead, #ejptbufpic tbody, #ejptbufpic tfoot, #ejptbufpic tr, #ejptbufpic td, #ejptbufpic th {
+#umdfdtfsck thead, #umdfdtfsck tbody, #umdfdtfsck tfoot, #umdfdtfsck tr, #umdfdtfsck td, #umdfdtfsck th {
   border-style: none;
 }
 
-#ejptbufpic p {
+#umdfdtfsck p {
   margin: 0;
   padding: 0;
 }
 
-#ejptbufpic .gt_table {
+#umdfdtfsck .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -300,12 +307,12 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-left-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_caption {
+#umdfdtfsck .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ejptbufpic .gt_title {
+#umdfdtfsck .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -317,7 +324,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-bottom-width: 0;
 }
 
-#ejptbufpic .gt_subtitle {
+#umdfdtfsck .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -329,7 +336,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-top-width: 0;
 }
 
-#ejptbufpic .gt_heading {
+#umdfdtfsck .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -341,13 +348,13 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-right-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_bottom_border {
+#umdfdtfsck .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_col_headings {
+#umdfdtfsck .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -362,7 +369,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-right-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_col_heading {
+#umdfdtfsck .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -382,7 +389,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   overflow-x: hidden;
 }
 
-#ejptbufpic .gt_column_spanner_outer {
+#umdfdtfsck .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -394,15 +401,15 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   padding-right: 4px;
 }
 
-#ejptbufpic .gt_column_spanner_outer:first-child {
+#umdfdtfsck .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ejptbufpic .gt_column_spanner_outer:last-child {
+#umdfdtfsck .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ejptbufpic .gt_column_spanner {
+#umdfdtfsck .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -414,11 +421,11 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   width: 100%;
 }
 
-#ejptbufpic .gt_spanner_row {
+#umdfdtfsck .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ejptbufpic .gt_group_heading {
+#umdfdtfsck .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -444,7 +451,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   text-align: left;
 }
 
-#ejptbufpic .gt_empty_group_heading {
+#umdfdtfsck .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -459,15 +466,15 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   vertical-align: middle;
 }
 
-#ejptbufpic .gt_from_md > :first-child {
+#umdfdtfsck .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ejptbufpic .gt_from_md > :last-child {
+#umdfdtfsck .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ejptbufpic .gt_row {
+#umdfdtfsck .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -486,7 +493,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   overflow-x: hidden;
 }
 
-#ejptbufpic .gt_stub {
+#umdfdtfsck .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -499,7 +506,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   padding-right: 5px;
 }
 
-#ejptbufpic .gt_stub_row_group {
+#umdfdtfsck .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -513,15 +520,15 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   vertical-align: top;
 }
 
-#ejptbufpic .gt_row_group_first td {
+#umdfdtfsck .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ejptbufpic .gt_row_group_first th {
+#umdfdtfsck .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ejptbufpic .gt_summary_row {
+#umdfdtfsck .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -531,16 +538,16 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   padding-right: 5px;
 }
 
-#ejptbufpic .gt_first_summary_row {
+#umdfdtfsck .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_first_summary_row.thick {
+#umdfdtfsck .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ejptbufpic .gt_last_summary_row {
+#umdfdtfsck .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -550,7 +557,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-bottom-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_grand_summary_row {
+#umdfdtfsck .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -560,7 +567,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   padding-right: 5px;
 }
 
-#ejptbufpic .gt_first_grand_summary_row {
+#umdfdtfsck .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -570,7 +577,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-top-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_last_grand_summary_row_top {
+#umdfdtfsck .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -580,11 +587,11 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-bottom-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_striped {
+#umdfdtfsck .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ejptbufpic .gt_table_body {
+#umdfdtfsck .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -593,7 +600,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-bottom-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_footnotes {
+#umdfdtfsck .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -607,7 +614,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-right-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_footnote {
+#umdfdtfsck .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -616,7 +623,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   padding-right: 5px;
 }
 
-#ejptbufpic .gt_sourcenotes {
+#umdfdtfsck .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -630,7 +637,7 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   border-right-color: #D3D3D3;
 }
 
-#ejptbufpic .gt_sourcenote {
+#umdfdtfsck .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -638,63 +645,63 @@ Table&nbsp;2.1: Absolute number of respondents who answered “Don’t know” f
   padding-right: 5px;
 }
 
-#ejptbufpic .gt_left {
+#umdfdtfsck .gt_left {
   text-align: left;
 }
 
-#ejptbufpic .gt_center {
+#umdfdtfsck .gt_center {
   text-align: center;
 }
 
-#ejptbufpic .gt_right {
+#umdfdtfsck .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ejptbufpic .gt_font_normal {
+#umdfdtfsck .gt_font_normal {
   font-weight: normal;
 }
 
-#ejptbufpic .gt_font_bold {
+#umdfdtfsck .gt_font_bold {
   font-weight: bold;
 }
 
-#ejptbufpic .gt_font_italic {
+#umdfdtfsck .gt_font_italic {
   font-style: italic;
 }
 
-#ejptbufpic .gt_super {
+#umdfdtfsck .gt_super {
   font-size: 65%;
 }
 
-#ejptbufpic .gt_footnote_marks {
+#umdfdtfsck .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ejptbufpic .gt_asterisk {
+#umdfdtfsck .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ejptbufpic .gt_indent_1 {
+#umdfdtfsck .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ejptbufpic .gt_indent_2 {
+#umdfdtfsck .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ejptbufpic .gt_indent_3 {
+#umdfdtfsck .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ejptbufpic .gt_indent_4 {
+#umdfdtfsck .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ejptbufpic .gt_indent_5 {
+#umdfdtfsck .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -802,23 +809,23 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
 <div aria-describedby="tbl-rep-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div>
-<div id="opqyvvkatf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#opqyvvkatf table {
+<div id="easffvjxrp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#easffvjxrp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#opqyvvkatf thead, #opqyvvkatf tbody, #opqyvvkatf tfoot, #opqyvvkatf tr, #opqyvvkatf td, #opqyvvkatf th {
+#easffvjxrp thead, #easffvjxrp tbody, #easffvjxrp tfoot, #easffvjxrp tr, #easffvjxrp td, #easffvjxrp th {
   border-style: none;
 }
 
-#opqyvvkatf p {
+#easffvjxrp p {
   margin: 0;
   padding: 0;
 }
 
-#opqyvvkatf .gt_table {
+#easffvjxrp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -844,12 +851,12 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-left-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_caption {
+#easffvjxrp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#opqyvvkatf .gt_title {
+#easffvjxrp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -861,7 +868,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-bottom-width: 0;
 }
 
-#opqyvvkatf .gt_subtitle {
+#easffvjxrp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -873,7 +880,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-top-width: 0;
 }
 
-#opqyvvkatf .gt_heading {
+#easffvjxrp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -885,13 +892,13 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-right-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_bottom_border {
+#easffvjxrp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_col_headings {
+#easffvjxrp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -906,7 +913,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-right-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_col_heading {
+#easffvjxrp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -926,7 +933,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   overflow-x: hidden;
 }
 
-#opqyvvkatf .gt_column_spanner_outer {
+#easffvjxrp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -938,15 +945,15 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   padding-right: 4px;
 }
 
-#opqyvvkatf .gt_column_spanner_outer:first-child {
+#easffvjxrp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#opqyvvkatf .gt_column_spanner_outer:last-child {
+#easffvjxrp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#opqyvvkatf .gt_column_spanner {
+#easffvjxrp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -958,11 +965,11 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   width: 100%;
 }
 
-#opqyvvkatf .gt_spanner_row {
+#easffvjxrp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#opqyvvkatf .gt_group_heading {
+#easffvjxrp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -988,7 +995,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   text-align: left;
 }
 
-#opqyvvkatf .gt_empty_group_heading {
+#easffvjxrp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1003,15 +1010,15 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   vertical-align: middle;
 }
 
-#opqyvvkatf .gt_from_md > :first-child {
+#easffvjxrp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#opqyvvkatf .gt_from_md > :last-child {
+#easffvjxrp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#opqyvvkatf .gt_row {
+#easffvjxrp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1030,7 +1037,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   overflow-x: hidden;
 }
 
-#opqyvvkatf .gt_stub {
+#easffvjxrp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1043,7 +1050,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   padding-right: 5px;
 }
 
-#opqyvvkatf .gt_stub_row_group {
+#easffvjxrp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1057,15 +1064,15 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   vertical-align: top;
 }
 
-#opqyvvkatf .gt_row_group_first td {
+#easffvjxrp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#opqyvvkatf .gt_row_group_first th {
+#easffvjxrp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#opqyvvkatf .gt_summary_row {
+#easffvjxrp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1075,16 +1082,16 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   padding-right: 5px;
 }
 
-#opqyvvkatf .gt_first_summary_row {
+#easffvjxrp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_first_summary_row.thick {
+#easffvjxrp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#opqyvvkatf .gt_last_summary_row {
+#easffvjxrp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1094,7 +1101,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-bottom-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_grand_summary_row {
+#easffvjxrp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1104,7 +1111,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   padding-right: 5px;
 }
 
-#opqyvvkatf .gt_first_grand_summary_row {
+#easffvjxrp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1114,7 +1121,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-top-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_last_grand_summary_row_top {
+#easffvjxrp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1124,11 +1131,11 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-bottom-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_striped {
+#easffvjxrp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#opqyvvkatf .gt_table_body {
+#easffvjxrp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1137,7 +1144,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-bottom-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_footnotes {
+#easffvjxrp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1151,7 +1158,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-right-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_footnote {
+#easffvjxrp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1160,7 +1167,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   padding-right: 5px;
 }
 
-#opqyvvkatf .gt_sourcenotes {
+#easffvjxrp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1174,7 +1181,7 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   border-right-color: #D3D3D3;
 }
 
-#opqyvvkatf .gt_sourcenote {
+#easffvjxrp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1182,63 +1189,63 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
   padding-right: 5px;
 }
 
-#opqyvvkatf .gt_left {
+#easffvjxrp .gt_left {
   text-align: left;
 }
 
-#opqyvvkatf .gt_center {
+#easffvjxrp .gt_center {
   text-align: center;
 }
 
-#opqyvvkatf .gt_right {
+#easffvjxrp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#opqyvvkatf .gt_font_normal {
+#easffvjxrp .gt_font_normal {
   font-weight: normal;
 }
 
-#opqyvvkatf .gt_font_bold {
+#easffvjxrp .gt_font_bold {
   font-weight: bold;
 }
 
-#opqyvvkatf .gt_font_italic {
+#easffvjxrp .gt_font_italic {
   font-style: italic;
 }
 
-#opqyvvkatf .gt_super {
+#easffvjxrp .gt_super {
   font-size: 65%;
 }
 
-#opqyvvkatf .gt_footnote_marks {
+#easffvjxrp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#opqyvvkatf .gt_asterisk {
+#easffvjxrp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#opqyvvkatf .gt_indent_1 {
+#easffvjxrp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#opqyvvkatf .gt_indent_2 {
+#easffvjxrp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#opqyvvkatf .gt_indent_3 {
+#easffvjxrp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#opqyvvkatf .gt_indent_4 {
+#easffvjxrp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#opqyvvkatf .gt_indent_5 {
+#easffvjxrp .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1303,9 +1310,9 @@ Table&nbsp;2.2: Absolute number of respondents who repeated the same answer for 
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="country_survey">UK</td>
-<td class="gt_row gt_right" headers="V001a">15</td>
+<td class="gt_row gt_right" headers="V001a">14</td>
 <td class="gt_row gt_right" headers="V001b">39</td>
-<td class="gt_row gt_right" headers="V001e">80</td>
+<td class="gt_row gt_right" headers="V001e">79</td>
 </tr>
 </tbody>
 </table>
@@ -1359,23 +1366,23 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
 <div aria-describedby="tbl-dem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div>
-<div id="ierwkgdwva" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ierwkgdwva table {
+<div id="oqnfmqgarh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oqnfmqgarh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ierwkgdwva thead, #ierwkgdwva tbody, #ierwkgdwva tfoot, #ierwkgdwva tr, #ierwkgdwva td, #ierwkgdwva th {
+#oqnfmqgarh thead, #oqnfmqgarh tbody, #oqnfmqgarh tfoot, #oqnfmqgarh tr, #oqnfmqgarh td, #oqnfmqgarh th {
   border-style: none;
 }
 
-#ierwkgdwva p {
+#oqnfmqgarh p {
   margin: 0;
   padding: 0;
 }
 
-#ierwkgdwva .gt_table {
+#oqnfmqgarh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1401,12 +1408,12 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-left-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_caption {
+#oqnfmqgarh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ierwkgdwva .gt_title {
+#oqnfmqgarh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1418,7 +1425,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-bottom-width: 0;
 }
 
-#ierwkgdwva .gt_subtitle {
+#oqnfmqgarh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1430,7 +1437,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-top-width: 0;
 }
 
-#ierwkgdwva .gt_heading {
+#oqnfmqgarh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1442,13 +1449,13 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-right-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_bottom_border {
+#oqnfmqgarh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_col_headings {
+#oqnfmqgarh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1463,7 +1470,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-right-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_col_heading {
+#oqnfmqgarh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1483,7 +1490,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   overflow-x: hidden;
 }
 
-#ierwkgdwva .gt_column_spanner_outer {
+#oqnfmqgarh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1495,15 +1502,15 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   padding-right: 4px;
 }
 
-#ierwkgdwva .gt_column_spanner_outer:first-child {
+#oqnfmqgarh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ierwkgdwva .gt_column_spanner_outer:last-child {
+#oqnfmqgarh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ierwkgdwva .gt_column_spanner {
+#oqnfmqgarh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1515,11 +1522,11 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   width: 100%;
 }
 
-#ierwkgdwva .gt_spanner_row {
+#oqnfmqgarh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ierwkgdwva .gt_group_heading {
+#oqnfmqgarh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1545,7 +1552,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   text-align: left;
 }
 
-#ierwkgdwva .gt_empty_group_heading {
+#oqnfmqgarh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1560,15 +1567,15 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   vertical-align: middle;
 }
 
-#ierwkgdwva .gt_from_md > :first-child {
+#oqnfmqgarh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ierwkgdwva .gt_from_md > :last-child {
+#oqnfmqgarh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ierwkgdwva .gt_row {
+#oqnfmqgarh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1587,7 +1594,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   overflow-x: hidden;
 }
 
-#ierwkgdwva .gt_stub {
+#oqnfmqgarh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1600,7 +1607,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   padding-right: 5px;
 }
 
-#ierwkgdwva .gt_stub_row_group {
+#oqnfmqgarh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1614,15 +1621,15 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   vertical-align: top;
 }
 
-#ierwkgdwva .gt_row_group_first td {
+#oqnfmqgarh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ierwkgdwva .gt_row_group_first th {
+#oqnfmqgarh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ierwkgdwva .gt_summary_row {
+#oqnfmqgarh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1632,16 +1639,16 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   padding-right: 5px;
 }
 
-#ierwkgdwva .gt_first_summary_row {
+#oqnfmqgarh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_first_summary_row.thick {
+#oqnfmqgarh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ierwkgdwva .gt_last_summary_row {
+#oqnfmqgarh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1651,7 +1658,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-bottom-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_grand_summary_row {
+#oqnfmqgarh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1661,7 +1668,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   padding-right: 5px;
 }
 
-#ierwkgdwva .gt_first_grand_summary_row {
+#oqnfmqgarh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1671,7 +1678,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-top-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_last_grand_summary_row_top {
+#oqnfmqgarh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1681,11 +1688,11 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-bottom-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_striped {
+#oqnfmqgarh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ierwkgdwva .gt_table_body {
+#oqnfmqgarh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1694,7 +1701,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-bottom-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_footnotes {
+#oqnfmqgarh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1708,7 +1715,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-right-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_footnote {
+#oqnfmqgarh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1717,7 +1724,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   padding-right: 5px;
 }
 
-#ierwkgdwva .gt_sourcenotes {
+#oqnfmqgarh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1731,7 +1738,7 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   border-right-color: #D3D3D3;
 }
 
-#ierwkgdwva .gt_sourcenote {
+#oqnfmqgarh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1739,63 +1746,63 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
   padding-right: 5px;
 }
 
-#ierwkgdwva .gt_left {
+#oqnfmqgarh .gt_left {
   text-align: left;
 }
 
-#ierwkgdwva .gt_center {
+#oqnfmqgarh .gt_center {
   text-align: center;
 }
 
-#ierwkgdwva .gt_right {
+#oqnfmqgarh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ierwkgdwva .gt_font_normal {
+#oqnfmqgarh .gt_font_normal {
   font-weight: normal;
 }
 
-#ierwkgdwva .gt_font_bold {
+#oqnfmqgarh .gt_font_bold {
   font-weight: bold;
 }
 
-#ierwkgdwva .gt_font_italic {
+#oqnfmqgarh .gt_font_italic {
   font-style: italic;
 }
 
-#ierwkgdwva .gt_super {
+#oqnfmqgarh .gt_super {
   font-size: 65%;
 }
 
-#ierwkgdwva .gt_footnote_marks {
+#oqnfmqgarh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ierwkgdwva .gt_asterisk {
+#oqnfmqgarh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ierwkgdwva .gt_indent_1 {
+#oqnfmqgarh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ierwkgdwva .gt_indent_2 {
+#oqnfmqgarh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ierwkgdwva .gt_indent_3 {
+#oqnfmqgarh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ierwkgdwva .gt_indent_4 {
+#oqnfmqgarh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ierwkgdwva .gt_indent_5 {
+#oqnfmqgarh .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1835,19 +1842,19 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
 <td class="gt_row gt_right" headers="Male">36%</td>
 <td class="gt_row gt_right" headers="Higher">31%</td>
 <td class="gt_row gt_right" headers="No higher">37%</td>
-<td class="gt_row gt_right" headers="18-24">21%</td>
+<td class="gt_row gt_right" headers="18-24">24%</td>
 <td class="gt_row gt_right" headers="25-45">33%</td>
 <td class="gt_row gt_right" headers="46+">35%</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="country_survey">Ireland</td>
-<td class="gt_row gt_right" headers="Female">30%</td>
-<td class="gt_row gt_right" headers="Male">34%</td>
-<td class="gt_row gt_right" headers="Higher">27%</td>
-<td class="gt_row gt_right" headers="No higher">29%</td>
-<td class="gt_row gt_right" headers="18-24">27%</td>
-<td class="gt_row gt_right" headers="25-45">31%</td>
-<td class="gt_row gt_right" headers="46+">33%</td>
+<td class="gt_row gt_right" headers="Female">29%</td>
+<td class="gt_row gt_right" headers="Male">37%</td>
+<td class="gt_row gt_right" headers="Higher">26%</td>
+<td class="gt_row gt_right" headers="No higher">33%</td>
+<td class="gt_row gt_right" headers="18-24">28%</td>
+<td class="gt_row gt_right" headers="25-45">33%</td>
+<td class="gt_row gt_right" headers="46+">34%</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="country_survey">Spain</td>
@@ -1871,23 +1878,23 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="country_survey">The Netherlands</td>
-<td class="gt_row gt_right" headers="Female">28%</td>
-<td class="gt_row gt_right" headers="Male">32%</td>
-<td class="gt_row gt_right" headers="Higher">26%</td>
-<td class="gt_row gt_right" headers="No higher">29%</td>
-<td class="gt_row gt_right" headers="18-24">19%</td>
+<td class="gt_row gt_right" headers="Female">27%</td>
+<td class="gt_row gt_right" headers="Male">31%</td>
+<td class="gt_row gt_right" headers="Higher">23%</td>
+<td class="gt_row gt_right" headers="No higher">26%</td>
+<td class="gt_row gt_right" headers="18-24">21%</td>
 <td class="gt_row gt_right" headers="25-45">32%</td>
-<td class="gt_row gt_right" headers="46+">32%</td>
+<td class="gt_row gt_right" headers="46+">30%</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="country_survey">UK</td>
-<td class="gt_row gt_right" headers="Female">31%</td>
-<td class="gt_row gt_right" headers="Male">35%</td>
-<td class="gt_row gt_right" headers="Higher">29%</td>
-<td class="gt_row gt_right" headers="No higher">29%</td>
-<td class="gt_row gt_right" headers="18-24">19%</td>
-<td class="gt_row gt_right" headers="25-45">29%</td>
-<td class="gt_row gt_right" headers="46+">37%</td>
+<td class="gt_row gt_right" headers="Female">34%</td>
+<td class="gt_row gt_right" headers="Male">39%</td>
+<td class="gt_row gt_right" headers="Higher">32%</td>
+<td class="gt_row gt_right" headers="No higher">27%</td>
+<td class="gt_row gt_right" headers="18-24">22%</td>
+<td class="gt_row gt_right" headers="25-45">35%</td>
+<td class="gt_row gt_right" headers="46+">40%</td>
 </tr>
 </tbody>
 </table>
@@ -1900,9 +1907,1033 @@ Table&nbsp;2.3: Average region congruence rate for Nigerian names by country and
 </div>
 </div>
 </section>
-<section id="average-time" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="average-time"><span class="header-section-number">2.3</span> Average time</h2>
-<p><strong>Placeholder for analysis on the time spent by respondent</strong></p>
+<section id="time" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="time"><span class="header-section-number">2.3</span> Time</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The results below are based on data from the second round only and exclude 781 observations for which time is higher than 300 seconds.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_es <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Filltime) <span class="sc">&amp;</span> Filltime <span class="sc">&lt;</span> <span class="dv">300</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_survey, region_es, id) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">time_id =</span> <span class="fu">mean</span>(Filltime), <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_survey, region_es) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(time_id), <span class="at">median =</span> <span class="fu">median</span>(time_id),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>()  <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">decimals =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_interactive</span>(<span class="at">use_filters =</span> <span class="cn">TRUE</span>, <span class="at">use_page_size_select =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-time" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-time-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.4: Mean value of time (in seconds) spent per name for each group
+</figcaption>
+<div aria-describedby="tbl-time-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="jaoajwlyvm" class=".gt_table" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jaoajwlyvm table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#jaoajwlyvm thead, #jaoajwlyvm tbody, #jaoajwlyvm tfoot, #jaoajwlyvm tr, #jaoajwlyvm td, #jaoajwlyvm th {
+  border-style: none;
+}
+
+#jaoajwlyvm p {
+  margin: 0;
+  padding: 0;
+}
+
+#jaoajwlyvm .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#jaoajwlyvm .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#jaoajwlyvm .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#jaoajwlyvm .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#jaoajwlyvm .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#jaoajwlyvm .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#jaoajwlyvm .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#jaoajwlyvm .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#jaoajwlyvm .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#jaoajwlyvm .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#jaoajwlyvm .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#jaoajwlyvm .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#jaoajwlyvm .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#jaoajwlyvm .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#jaoajwlyvm .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jaoajwlyvm .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#jaoajwlyvm .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#jaoajwlyvm .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#jaoajwlyvm .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jaoajwlyvm .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#jaoajwlyvm .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jaoajwlyvm .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#jaoajwlyvm .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jaoajwlyvm .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#jaoajwlyvm .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jaoajwlyvm .gt_left {
+  text-align: left;
+}
+
+#jaoajwlyvm .gt_center {
+  text-align: center;
+}
+
+#jaoajwlyvm .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#jaoajwlyvm .gt_font_normal {
+  font-weight: normal;
+}
+
+#jaoajwlyvm .gt_font_bold {
+  font-weight: bold;
+}
+
+#jaoajwlyvm .gt_font_italic {
+  font-style: italic;
+}
+
+#jaoajwlyvm .gt_super {
+  font-size: 65%;
+}
+
+#jaoajwlyvm .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#jaoajwlyvm .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#jaoajwlyvm .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#jaoajwlyvm .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#jaoajwlyvm .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#jaoajwlyvm .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#jaoajwlyvm .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<div id="jaoajwlyvm" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="jaoajwlyvm">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"country_survey":["Belgium","Belgium","Belgium","Czech Republic","Czech Republic","Germany","Germany","Germany","Germany","Hungary","Hungary","Ireland","Ireland","Ireland","Ireland","Switzerland","Switzerland","Switzerland","Switzerland","The Netherlands","The Netherlands","The Netherlands","The Netherlands","UK","UK","UK","UK"],"region_es":["MENAP","Majority","SSA","Majority","Other","MENAP","Majority","Other","SSA","Majority","Other","MENAP","Majority","Other","SSA","MENAP","Majority","Other","SSA","MENAP","Majority","Other","SSA","MENAP","Majority","Other","SSA"],"mean":[54.7646227167584,50.7679918450561,53.6900583213083,49.3726265822785,58.3295734126984,62.8338678328474,56.9625496031746,66.1010070493454,62.4025620539043,54.1433015873016,59.0959126984127,53.1658944658945,51.3625776397516,49.3505522088354,53.3471803103264,67.260808350528,61.1594869459624,63.6913757273483,65.263547309133,53.7525781910397,48.4060220525869,54.7231759656652,54.4187262297658,70.9092824008331,66.6727630285152,71.327375753795,70.1075159205399],"median":[49.9285714285714,42.4,49.5833333333333,40.8333333333333,55.0625,56.25,46.5,51,55.25,44.9285714285714,52.15,46.8571428571429,43,42,47.4,59.6666666666667,49.5,46.75,56,47.25,38.5,45.5833333333333,47.5,63,56,64.4166666666667,62]},"columns":[{"id":"country_survey","name":"country_survey","type":"character","style":"function(rowInfo, colInfo) {\nconst rowIndex = rowInfo.index + 1\n}","cell":["Belgium","Belgium","Belgium","Czech Republic","Czech Republic","Germany","Germany","Germany","Germany","Hungary","Hungary","Ireland","Ireland","Ireland","Ireland","Switzerland","Switzerland","Switzerland","Switzerland","The Netherlands","The Netherlands","The Netherlands","The Netherlands","UK","UK","UK","UK"],"html":true,"align":"left","headerStyle":{"font-weight":"normal"}},{"id":"region_es","name":"region_es","type":"character","style":"function(rowInfo, colInfo) {\nconst rowIndex = rowInfo.index + 1\n}","cell":["MENAP","Majority","SSA","Majority","Other","MENAP","Majority","Other","SSA","Majority","Other","MENAP","Majority","Other","SSA","MENAP","Majority","Other","SSA","MENAP","Majority","Other","SSA","MENAP","Majority","Other","SSA"],"html":true,"align":"left","headerStyle":{"font-weight":"normal"}},{"id":"mean","name":"mean","type":"numeric","style":"function(rowInfo, colInfo) {\nconst rowIndex = rowInfo.index + 1\n}","cell":["54.76","50.77","53.69","49.37","58.33","62.83","56.96","66.10","62.40","54.14","59.10","53.17","51.36","49.35","53.35","67.26","61.16","63.69","65.26","53.75","48.41","54.72","54.42","70.91","66.67","71.33","70.11"],"html":true,"align":"right","headerStyle":{"font-weight":"normal"}},{"id":"median","name":"median","type":"numeric","style":"function(rowInfo, colInfo) {\nconst rowIndex = rowInfo.index + 1\n}","cell":["49.93","42.40","49.58","40.83","55.06","56.25","46.50","51.00","55.25","44.93","52.15","46.86","43.00","42.00","47.40","59.67","49.50","46.75","56.00","47.25","38.50","45.58","47.50","63.00","56.00","64.42","62.00"],"html":true,"align":"right","headerStyle":{"font-weight":"normal"}}],"filterable":true,"defaultPageSize":10,"showPageSizeOptions":true,"pageSizeOptions":[10,25,50,100],"paginationType":"numbers","showPagination":true,"showPageInfo":true,"minRows":1,"showSortable":true,"height":"auto","theme":{"color":"#333333","backgroundColor":"#FFFFFF","stripedColor":"rgba(128,128,128,0.05)","style":{"fontFamily":"system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"},"headerStyle":{"borderTopStyle":"solid","borderTopWidth":"2px","borderTopColor":"#D3D3D3","borderBottomStyle":"solid","borderBottomWidth":"2px","borderBottomColor":"#D3D3D3"}},"elementId":"jaoajwlyvm","dataKey":"87155656cb7f140c91899facd0a55b13"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.0.style","tag.attribs.columns.1.style","tag.attribs.columns.2.style","tag.attribs.columns.3.style"],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_es <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Filltime) <span class="sc">&amp;</span> Filltime <span class="sc">&lt;</span> <span class="dv">300</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Filltime)) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span>  <span class="dv">100</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>country_survey) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-time" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-time-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="quality_files/figure-html/fig-time-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-time-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Distribution of time spent for each name
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_es <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Filltime) <span class="sc">&amp;</span> Filltime <span class="sc">&lt;</span> <span class="dv">300</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_survey, id) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">time_id =</span> <span class="fu">mean</span>(Filltime), <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_survey) <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">less_30 =</span> <span class="fu">sum</span>(<span class="fu">if_else</span>(time_id <span class="sc">&lt;</span> <span class="dv">30</span>, <span class="dv">1</span>, <span class="dv">0</span>)),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">less_45 =</span> <span class="fu">sum</span>(<span class="fu">if_else</span>(time_id <span class="sc">&lt;</span> <span class="dv">45</span>, <span class="dv">1</span>, <span class="dv">0</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-quick" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-quick-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.5: Number of respondents who, on average, took less than 30 / 45 seconds to complete a name
+</figcaption>
+<div aria-describedby="tbl-quick-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div>
+<div id="pizcubtvkj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pizcubtvkj table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#pizcubtvkj thead, #pizcubtvkj tbody, #pizcubtvkj tfoot, #pizcubtvkj tr, #pizcubtvkj td, #pizcubtvkj th {
+  border-style: none;
+}
+
+#pizcubtvkj p {
+  margin: 0;
+  padding: 0;
+}
+
+#pizcubtvkj .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pizcubtvkj .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pizcubtvkj .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pizcubtvkj .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pizcubtvkj .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pizcubtvkj .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pizcubtvkj .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pizcubtvkj .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pizcubtvkj .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#pizcubtvkj .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#pizcubtvkj .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pizcubtvkj .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pizcubtvkj .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pizcubtvkj .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pizcubtvkj .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pizcubtvkj .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#pizcubtvkj .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#pizcubtvkj .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#pizcubtvkj .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pizcubtvkj .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#pizcubtvkj .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pizcubtvkj .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pizcubtvkj .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pizcubtvkj .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pizcubtvkj .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pizcubtvkj .gt_left {
+  text-align: left;
+}
+
+#pizcubtvkj .gt_center {
+  text-align: center;
+}
+
+#pizcubtvkj .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pizcubtvkj .gt_font_normal {
+  font-weight: normal;
+}
+
+#pizcubtvkj .gt_font_bold {
+  font-weight: bold;
+}
+
+#pizcubtvkj .gt_font_italic {
+  font-style: italic;
+}
+
+#pizcubtvkj .gt_super {
+  font-size: 65%;
+}
+
+#pizcubtvkj .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#pizcubtvkj .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#pizcubtvkj .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#pizcubtvkj .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#pizcubtvkj .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#pizcubtvkj .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#pizcubtvkj .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th id="country_survey" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">country_survey</th>
+<th id="less_30" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">less_30</th>
+<th id="less_45" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">less_45</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="country_survey">Belgium</td>
+<td class="gt_row gt_right" headers="less_30">34</td>
+<td class="gt_row gt_right" headers="less_45">163</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="country_survey">Czech Republic</td>
+<td class="gt_row gt_right" headers="less_30">23</td>
+<td class="gt_row gt_right" headers="less_45">107</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="country_survey">Germany</td>
+<td class="gt_row gt_right" headers="less_30">21</td>
+<td class="gt_row gt_right" headers="less_45">127</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="country_survey">Hungary</td>
+<td class="gt_row gt_right" headers="less_30">10</td>
+<td class="gt_row gt_right" headers="less_45">62</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="country_survey">Ireland</td>
+<td class="gt_row gt_right" headers="less_30">30</td>
+<td class="gt_row gt_right" headers="less_45">191</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="country_survey">Switzerland</td>
+<td class="gt_row gt_right" headers="less_30">36</td>
+<td class="gt_row gt_right" headers="less_45">238</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="country_survey">The Netherlands</td>
+<td class="gt_row gt_right" headers="less_30">35</td>
+<td class="gt_row gt_right" headers="less_45">218</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="country_survey">UK</td>
+<td class="gt_row gt_right" headers="less_30">25</td>
+<td class="gt_row gt_right" headers="less_45">86</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
 
 
 </section>

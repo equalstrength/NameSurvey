@@ -5,13 +5,14 @@
 # Required packages
 library(tidyverse) # for data manipulation
 library(haven) # to import/export from/to SPSS/STATA formats
-library(openxlsx) # to import/export from/to MS Excel file
+#library(openxlsx) # to import/export from/to MS Excel file
 
 # 1) Importing dictionary #####################################################
 ###############################################################################
 # This file contains the expected information (e.g. country of origin, sex..)
 # for each of the names tested in the survey
-tb_dict <- openxlsx::read.xlsx("./data/tb_dictionary_full.xlsx")
+#tb_dict <- openxlsx::read.xlsx("./data/tb_dictionary_full.xlsx")
+tb_dict <- read_csv("./data/tb_dictionary_full.csv")
 
 # Removing empty spaces before or after the name
 tb_dict$name  <- str_trim(tb_dict$name)
@@ -23,7 +24,7 @@ tb_dict$country_code  <- str_remove(tb_dict$country_code, "Name1_")
 tb_dict$country_code <- if_else(tb_dict$country_name == "Bangladesh", "V001c_48", tb_dict$country_code)
 
 # Correcting spelling in names that contain the number 5 instead of "ssa"
-tb_dict <- tb_dict |> mutate(name = str_replace(name, "5", "ssa"))
+#tb_dict <- tb_dict |> mutate(name = str_replace(name, "5", "ssa"))
 
 
 # 2) Importing datafiles ######################################################
@@ -106,7 +107,6 @@ df_long <-
             "Rézm?ves Géza" ~ "Rézműves Géza",
             "Rézmuves Marianna" ~ "Rézműves Marianna",
             "Rézm?ves Marianna" ~ "Rézműves Marianna",
-            "Francois Kapinga" ~ "François Kapinga",
             .default = Name
         ))
 
