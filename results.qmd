@@ -43,7 +43,7 @@ get_rank <- function(country, ...){
       opt_interactive(use_filters = TRUE, use_page_size_select = TRUE)
   }
 
-country_variables <- c("rank", "score", "cong_sex", "cong_religion", "skin_adj", "cong_country", "ladder_adj", "cong_ethn")
+country_variables <- c("rank", "score", "cong_sex", "cong_religion", "skin_adj", "cong_country", "cong_region", "ladder_adj", "cong_ethn")
 ```
 
 
