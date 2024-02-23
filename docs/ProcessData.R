@@ -5,13 +5,11 @@
 # Required packages
 library(tidyverse) # for data manipulation
 library(haven) # to import/export from/to SPSS/STATA formats
-#library(openxlsx) # to import/export from/to MS Excel file
 
 # 1) Importing dictionary #####################################################
 ###############################################################################
 # This file contains the expected information (e.g. country of origin, sex..)
 # for each of the names tested in the survey
-#tb_dict <- openxlsx::read.xlsx("./data/tb_dictionary_full.xlsx")
 tb_dict <- read_csv("./data/tb_dictionary_full.csv")
 
 # Removing empty spaces before or after the name
@@ -22,9 +20,6 @@ tb_dict$country_code  <- str_remove(tb_dict$country_code, "Name1_")
 
 # Correcting country code for Bangladesh
 tb_dict$country_code <- if_else(tb_dict$country_name == "Bangladesh", "V001c_48", tb_dict$country_code)
-
-# Correcting spelling in names that contain the number 5 instead of "ssa"
-#tb_dict <- tb_dict |> mutate(name = str_replace(name, "5", "ssa"))
 
 
 # 2) Importing datafiles ######################################################
@@ -42,10 +37,13 @@ ls_round_2 <- list.files("./data/round2", recursive = TRUE, full.names=TRUE)
 spain_file <- "./data/round2/raw_round2/ES_DATA_Long.sav"
 ls_round_2 <- setdiff(ls_round_2, spain_file)
 
-# Generating a list of files sent in the second Round
+# Importing  all files from the second Round
 df_round_2 <- map_dfr(ls_round_2, read_sav) |> mutate(round = 2)
 
-# Final raw binded dataset
+# Removing test entries (?) in Germany and the UK
+df_round_2 <- df_round_2 |> filter(!Name1 %in% c('keine', ""))
+
+# Final raw  dataset binding rows
 df_raw <- bind_rows(df_round_1, df_round_2)
 
 # 3) Transforming from wide to long ###########################################
@@ -80,8 +78,11 @@ df_long <-
             "Ayla Sahin" ~ "Ayla Şahin",
             "Ilyas Sahin" ~ "Ilyas Şahin",
             "Ayse Kaya" ~ "Ayşe Kaya",
+            "Ay?e Kaya" ~ "Ayşe Kaya",
             "Hatice Sahin" ~ "Hatice Şahin",
+            "Hatice ?ahin" ~ "Hatice Şahin",
             "Mehmet Sahin" ~ "Mehmet Şahin",
+            "Mehmet ?ahin" ~ "Mehmet Şahin",
             "Adriana Lakatos?ová" ~ "Adriana Lakatošová",
             "Adriana Lakatošová" ~ "Adriana Lakatošová",
             "Ernest Lakatos?" ~ "Ernest Lakatoš",
@@ -93,6 +94,7 @@ df_long <-
             "Kate?ina Procházková" ~ "Kateřina Procházková",
             "Lucie Kucerová" ~ "Lucie Kučerová",
             "Marie Dvoráková" ~ "Marie Dvořáková",
+            "Marie Dvo?áková" ~ "Marie Dvořáková",
             "René Gaz?i" ~ "René Gaži",
             "Samanta Ginová" ~ "Samanta Giňová",
             "Samanta Gi?ová" ~ "Samanta Giňová",
@@ -117,13 +119,9 @@ df_csic <- read_sav(spain_file)
 # Adjusting names/variable formats
 names(df_csic) <- str_remove(names(df_csic), "Name1_")
 df_csic <- df_csic |> rename(Name = Name1)
-df_csic <- df_csic |> select(input_1:V001c_52)
+df_csic <- df_csic |> select(input_1:V001c_52, Weging)
 df_csic$VS5b_1 <- as.character(df_csic$VS5b_1)
 df_csic$VS5b_2 <- as.character(df_csic$VS5b_2)
-
-#Temporarily adding weight variable for Spain as 1
-df_csic$Weging <- 1
-print("Spain has weight variable as 1")
 
 # binding datasets
 df_long <- bind_rows(df_long, df_csic)
@@ -155,7 +153,6 @@ df_es$cong_religion <- if_else(df_es$V001e == df_es$religion, 1, 0)
 # Check if the column marked Yes is the column for the expected country
 df_es <- 
     df_es |>
-    filter(country_code != ".") |>
     group_by(country_survey, country_name) |>
     mutate(cong_country = if_else(eval(as.name(country_code)) == 1, 1, 0, missing = 0)) |>
     ungroup()
