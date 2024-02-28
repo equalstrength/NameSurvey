@@ -23,5 +23,8 @@ EqualStrength team
 
 ## Version control
 16-Feb: Initial version
-
+20-Feb: Document and adjust duplicate entries caused by a correction in the spelling of four names in the second round.
+21-Feb: Add column of region congruence rate in all country tables
+23-Feb: Re-run the results for Spain based on weighted data (Weight variable calculated by Spain)
+28-Feb: Adjust ladder variable for Spain and add score/rank for Surinamese names in the Netherlands
 
