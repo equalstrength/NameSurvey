@@ -1,0 +1,210 @@
+---
+page-layout: full
+from: markdown+emoji
+---
+
+# Name selection
+
+```{r}
+# Import packages and working dataset
+source("WorkingDF.R")
+```
+
+
+::: {.callout-note}
+All the analyses use weighed data (Variable: `Weging`)
+:::
+
+## Congruence rates
+
+```{r}
+# Function to get congruence rates for different variables for all countries
+get_cong_all <- function(...){
+    # creates a vector with variables assigned in the input
+    selected_vars <- c(...)
+    # creates a table with cong. rates for these varuables
+    df_es |>
+        group_by(country_survey, Name) |>
+        summarise(across(all_of(selected_vars), ~get_mean(., Weging)), .groups = 'drop') |>
+        group_by(country_survey) |>
+        summarise(across(all_of(selected_vars), ~mean(.x, na.rm = T)), .groups = 'drop') |>
+        gt() |> 
+        fmt_percent(decimals = 0) |>
+        sub_missing()
+}
+
+```
+
+The @tbl-cong shows the mean congruence rate of each name by country. Congruence rate is defined as the proportion of responses that selected the expected alternative for each name. For instance, for the name 'John', the Sex Congruence Rate is the proportion of responses that selected "Male" among all responses (including 'Don't Know'). 
+
+```{r}
+#| tbl-cap: Mean congruence rate by surveyed country
+#| label: tbl-cong
+
+get_cong_all("cong_sex", "cong_region", "cong_religion", "skin_adj") |>
+    cols_label_with(fn =  ~str_remove(., "cong_"))
+
+```
+
+
+::: {.callout-important}
+The country congruence rate includes missing values in the denominator. For example, if the respondent selected the region "Northern and Western Europe" for a Nigerian name, the country Nigeria is not listed in the following screen. However, regardless of the selection made for country, this observation is included in the calculation as "not congruent".  
+:::
+
+## Multiple countries
+
+```{r}
+#| tbl-cap: Average number of countries selected for each name (mean of means) by country
+#| label: tbl-n-cnt
+
+get_cong_all("cong_n_countries") |> fmt_number()
+
+```
+
+## Common names
+
+Average congruence rates for names that were tested across six countries.
+
+```{r}
+common_names <- 
+  df_es |>
+      group_by(Name) |>
+      summarise(n = n_distinct(country_survey)) |>
+      filter(n > 5) |>
+      pull(Name)
+
+cn_variables <- c("cong_sex","cong_country", "cong_religion", "skin_adj", "ladder_adj")
+
+df_es |>
+  filter(Name %in% common_names) |>
+  group_by(country_survey, country_name, Name) |>
+  summarise(across(all_of(cn_variables), ~get_mean(., Weging)), .groups = 'drop') |>
+  group_by(country_name, Name) |>
+  summarise(across(all_of(cn_variables), mean), .groups = 'drop') |>
+  gt() |> 
+  fmt_percent(decimals = 0) |>
+  sub_missing() |>
+  cols_label_with(fn =  ~str_remove(., "cong_|_adj")) |>
+  opt_interactive(use_filters = TRUE, use_page_size_select = TRUE)
+
+```
+
+
+## Selected names
+
+We use a composite score to select names. This composite score is calculated for each name as the weighted mean value of these variables:
+
+
+- MENAP names: `CONGRUENCE SEX` / `CONGRUENCE RELIGION`
+- SSA names: `CONGRUENCE SEX` / `SKIN COLOUR`
+- Names in CZ and HU: `CONGRUENCE SEX` / `CONGRUENCE ETHNICITY`
+- Majority names: `CONGRUENCE SEX` / `CONGRUENCE COUNTRY`
+
+
+```{r}
+
+# Limit of names per gender/country
+name_lim <- 2
+
+tb_selected <- 
+    df_es |> 
+      group_by(country_survey, region_es, country_name, sex, Name) |>
+      summarise(across(all_of(c("score", "rank", "cong_sex", "cong_religion", 
+                                "cong_ethn", "skin_adj", "cong_country")),
+                        ~get_mean(., Weging)), .groups = 'drop')
+
+plot_select <- function(myregion, myvar, name_lim){
+
+  plot <- 
+    tb_selected |> 
+      filter(region_es == myregion) |>
+      mutate(selected = if_else(rank <= name_lim, "Selected", "Not selected")) |>
+      ggplot(aes(x = cong_sex, y = get(myvar), color = selected, label = Name))+
+      geom_point(alpha = 0.6) +
+      facet_wrap(~country_survey) +
+      theme_classic() +
+      labs(x = "Congruence for Gender",
+           y = paste("Congruence for ", myregion, " relevant variable"))
+
+ggplotly(plot)
+
+}
+
+```
+
+
+### SSA 
+
+This plot shows the congruence for Gender and congruence for Skin Colour (relevant variable for SSA) by name and country. The size represents congruence for region and the colours show which names were selected using the top **2** names with the highest composite scores.
+
+
+::: {.callout-warning}
+The scores below use the skin colour data for round 2 only, with the following scale:
+
+```{r}
+#| echo: false
+get_img <- function(imgn)paste0("![](./_img/", imgn, ".png){width=20px}")
+```
+
+| 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     | 9     |  10   |
+|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+| `r get_img(1)` | `r get_img(2)` | `r get_img(3)` | `r get_img(4)` | `r get_img(5)` | `r get_img(6)` | `r get_img(7)` | `r get_img(8)` | `r get_img(9)` | `r get_img(10)` |
+
+
+:::
+
+
+
+```{r}
+#| fig-cap: SSA selected names and their respective gender/skin colour rates
+#| label: fig-ssa
+
+plot_select("SSA", "skin_adj", name_lim)
+```
+
+### MENAP 
+
+```{r}
+#| fig-cap: MENAP selected names and their respective gender/religion congruence rates
+#| label: fig-MENAP
+plot_select("MENAP", "cong_religion", name_lim)
+```
+
+
+### Majority 
+
+```{r}
+#| fig-cap: Majority selected names and their respective gender/country congruence rates
+#| label: fig-Majority
+
+plot_select("Majority", "cong_country", name_lim)
+```
+
+### Ethnicity
+
+```{r}
+#| fig-cap: Selected names in Czech Republic, Hungary, and Spain and their respective gender/ethnicity congruence rates
+#| label: fig-ethn
+plot_select("Other", "cong_ethn", name_lim)
+
+```
+
+
+::: {.column-page-right}
+
+
+### Full table
+
+```{r}
+#| tbl-cap: All selected names by country
+#| label: tbl-select
+tb_selected |>
+  filter(rank <= name_lim) |>
+  gt() |>
+  fmt_percent(columns = c("cong_sex", "cong_religion", "cong_country"), decimals = 0) |>
+  fmt_number(columns = c("score", "skin_adj"), decimals = 2) |>
+  opt_interactive(use_filters = TRUE, use_page_size_select = TRUE)
+
+```
+
+:::

@@ -1,0 +1,34 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Name Survey"
+  author: "EqualStrength team"
+  chapters:
+    - index.qmd
+    - quality.qmd
+    - selection.qmd
+    - results.qmd
+  search: true
+  repo-url: https://github.com/equalstrength/NameSurvey
+#  repo-actions: [edit]
+  downloads: [pdf, epub]
+  sidebar:
+    style: docked
+    background: light
+    
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    code-fold: true
+    toc: true
+
+
+execute: 
+  echo: true
+  message: false
+  warning: false
