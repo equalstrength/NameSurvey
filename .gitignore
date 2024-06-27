@@ -18,5 +18,6 @@ data/
 # Temp/old files #
 ####################
 _archive/
-
 /.quarto/
+ES2_IEnames.R
+ES2_IEnames.csv
