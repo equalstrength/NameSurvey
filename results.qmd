@@ -7,7 +7,18 @@ from: markdown+emoji
 
 ```{r}
 # Import packages and working dataset
-source("WorkingDF.R")
+library(tidyverse)
+library(haven)
+library(plotly)
+library(gt)
+
+df_es <- readRDS("./data/ES2_NameSurvey_2025-01-24.RDS")
+
+# Get weighted mean using the survey weight variable
+get_mean <- function(var_es, wgt_es){
+    weighted.mean({{var_es}}, w = {{wgt_es}}, na.rm = TRUE)
+}
+
 ```
 
 # Results by country
@@ -30,20 +41,18 @@ get_rank <- function(country, ...){
         group_by(country_survey, country_name, Name) |>
         summarise(across(all_of(selected_vars), ~get_mean(., Weging)), .groups = 'drop') |>
         filter(country_survey == country) |>
-        arrange(country_name, rank)
+        arrange(country_name)
 
     openxlsx::write.xlsx(tb_country, file = paste0("./data/rankings/", country, ".xlsx"))
 
     gt(tb_country) |> 
       fmt_percent(decimals = 0) |>
-      fmt_number(columns = rank, decimals = 0) |>
-      fmt_number(columns = score, decimals = 2) |>
       sub_missing() |>
       cols_label_with(fn =  ~str_remove(., "cong_|_adj")) |>
       opt_interactive(use_filters = TRUE, use_page_size_select = TRUE)
   }
 
-country_variables <- c("rank", "score", "cong_sex", "cong_religion", "skin_adj", "cong_country", "cong_region", "ladder_adj", "cong_ethn")
+country_variables <- c("cong_sex", "skin_adj", "cong_country", "cong_region", "ladder_adj", "religiosity")
 ```
 
 

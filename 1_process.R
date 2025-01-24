@@ -2,15 +2,16 @@
 # EqualStrength Name Survey - Data Preparation
 ###############################################################################
 
-# Required packages
+# Loading required packages
 library(tidyverse) # for data manipulation
 library(haven) # to import/export from/to SPSS/STATA formats
 
-# 1) Importing dictionary #####################################################
 ###############################################################################
+# 1) Importing dictionary of the raw national datasets ########################
+
 # This file contains the expected information (e.g. country of origin, sex..)
 # for each of the names tested in the survey
-tb_dict <- read_csv("./data/tb_dictionary_full.csv")
+tb_dict <- read_csv("./data/raw/tb_dictionary_full.csv")
 
 # Removing empty spaces before or after the name
 tb_dict$name  <- str_trim(tb_dict$name)
@@ -21,26 +22,26 @@ tb_dict$country_code  <- str_remove(tb_dict$country_code, "Name1_")
 # Correcting country code for Bangladesh
 tb_dict$country_code <- if_else(tb_dict$country_name == "Bangladesh", "V001c_48", tb_dict$country_code)
 
-
-# 2) Importing datafiles ######################################################
 ###############################################################################
-# Generating a list of files in 'long format (ending with 'long.sav' or 'Datalong') 
-ls_round_1 <- list.files("./data/raw", recursive = TRUE, pattern = "\\wide.sav$|Datawide*.|SWI", full.names=TRUE)
+# 2) Importing datafiles ######################################################
+
+# Generating list of files in 'long format (ending with 'long.sav' or 'Datalong') 
+ls_round_1 <- list.files("./data/raw/round1", recursive = TRUE, pattern = "\\wide.sav$|Datawide*.|SWI", full.names=TRUE)
 
 # Importing  all files from the list and binding all rows into one dataset
 df_round_1 <- map_dfr(ls_round_1, read_sav) |> mutate(round = 1)
 
-# Generating a list of files sent in the second Round
-ls_round_2 <- list.files("./data/round2", recursive = TRUE, full.names=TRUE)
+# Generating list of files sent in the second Round
+ls_round_2 <- list.files("./data/raw/round2", recursive = TRUE, full.names=TRUE)
 
 # Removing path to Spanish file as it is already in the long format
-spain_file <- "./data/round2/raw_round2/ES_DATA_Long.sav"
+spain_file <- "./data/raw/round2/ES_DATA_Long.sav"
 ls_round_2 <- setdiff(ls_round_2, spain_file)
 
 # Importing  all files from the second Round
 df_round_2 <- map_dfr(ls_round_2, read_sav) |> mutate(round = 2)
 
-# Removing test entries (?) in Germany and the UK
+# Removing test entries in Germany and the UK
 df_round_2 <- df_round_2 |> filter(!Name1 %in% c('keine', ""))
 
 # Final raw  dataset binding rows
@@ -111,6 +112,10 @@ df_long <-
             "Rézm?ves Marianna" ~ "Rézműves Marianna",
             .default = Name
         ))
+
+# Removing input error in Fillin time -----------------
+
+df_long$Filltime_Total = if_else(df_long$Filltime_Total > 150000, NA, df_long$Filltime_Total)
 
 
 # Adding observations from Spain that are already in long format =)
@@ -210,6 +215,16 @@ df_es  <- df_es |> mutate(skin_adj = case_when(
     .default = V001db / 10
 ))
 
+# Adjusting variable fluency 
+# New scale goes from 0 (low) to 1 (high)
+df_es  <- df_es |> mutate(fluency = if_else(V001gaa_1 == 8, NA, V001gaa_1 / 7))
+
+
+# Adjusting variable religiosity 
+# New scale goes from 0 (low) to 1 (high)
+df_es  <- df_es |> mutate(religiosity = if_else(V001fa_1 == 8, NA, V001fa_1 / 7))
+
+
 # Creating variable for EqualStrength region
 
 df_es  <-  df_es |>
@@ -223,11 +238,135 @@ df_es  <-  df_es |>
     .default = "Other"
 ))
 
+
+# Creating score and rank for each observation --------------
+
+
+# Get weighted mean using the survey weight variable
+get_mean <- function(var_es, wgt_es){
+    weighted.mean({{var_es}}, w = {{wgt_es}}, na.rm = TRUE)
+}
+
+# Function to get composite score
+get_score <- function(var_gnd, var_oth, wgt_es){
+  wgnd <- 0.8 # Weight for the gender variable
+  woth <- 2 - wgnd # Weight for the other variable (n-wgnd)
+  comp1 <- wgnd * get_mean(var_gnd, wgt_es)
+  comp2 <- woth * get_mean(var_oth, wgt_es)
+  score <- (comp1 + comp2) / 2
+
+  return(score)
+}
+
+# Adding score and rank to each observation
+tb_score <-
+  df_es |>
+  filter(sex != 3) |> # 270 observations in NL excluded
+  group_by(country_survey, region_es, country_name, sex, Name) |>
+      summarise(
+        score_skn = get_score(cong_sex, skin_adj, Weging),
+        score_rlg = get_score(cong_sex, cong_religion, Weging),
+        score_cnt = get_score(cong_sex, cong_country, Weging),
+        score_ethn = get_score(cong_sex, cong_ethn, Weging),
+        .groups = "keep") |> 
+      mutate(score = case_when(
+                country_survey %in% c("Czech Republic", "Hungary") ~ score_ethn,
+                country_name %in% c("Dutch Antilles", "Surinam") ~ score_skn,
+                region_es == "SSA" ~ score_skn,
+                region_es == "MENAP" ~ score_rlg,
+                region_es == "Majority" ~ score_cnt,
+                region_es == "Other" ~ score_ethn,
+                .default = NA)) |>
+      group_by(country_survey, country_name, sex) |>
+      mutate(rank = dense_rank(desc(score))) |>
+      ungroup() |>
+      select(country_survey, Name, score, rank)
+
+
+df_es <- df_es |> left_join(tb_score, by = c("Name", "country_survey"))
+
+# Combining respondents' region into one variable
+
+df_es <- 
+    df_es |> mutate(VS4_Region = case_when(
+        !is.na(VS4BE) ~ paste0("BE_", as_factor(VS4BE)),
+        !is.na(VS4DE) ~ paste0("DE_", as_factor(VS4DE)),
+        !is.na(VS4ES) ~ paste0("ES_", as_factor(VS4ES)),
+        !is.na(VS4HUN) ~ paste0("HU_", as_factor(VS4HUN)),
+        !is.na(VS4IER) ~ paste0("IE_", as_factor(VS4IER)),
+        !is.na(VS4NL) ~ paste0("NL_", as_factor(VS4NL)),
+        !is.na(VS4UK) ~ paste0("UK_", as_factor(VS4UK)),
+        !is.na(VS4ZWI) ~ paste0("CH_", as_factor(VS4ZWI)),
+        !is.na(VS4CZ) ~ paste0("CZ_", as_factor(VS4CZ))
+    ))
+
 ###############################################################################
-# 7) Exporting files  ########################################################
+# 7) Removing country-specific columns and observations ######################
+
+# Variables ----------------------------------------------
+
+#Switzerland
+swi_cols <- c(
+    "V002Swi1",
+    "V002Swi2",
+    "V002Swi3",
+    "V002Swi4",
+    "V002Swi5",
+    "V002Swi6",
+    "V002Swic",
+    "V002Swid",
+    "V002Swie",
+    "V002Swif",
+    "V002Swif_o",
+    "V002Swigaa_1",
+    "V002Swih"
+)
+df_es <- select(df_es, setdiff(names(df_es), swi_cols))
+
+# Regions (keeping single variable VS4_region)
+region_cols <- c("VS4BE", "VS4DE","VS4ES", "VS4HUN", "VS4IER", "VS4NL", "VS4UK", "VS4ZWI", "VS4CZ" )
+df_es <- select(df_es, setdiff(names(df_es), region_cols))
+
+
+# Unadjusted variables
+unadjusted_cols <- c("V001db", "V001h", "V001gaa_1", "Leeftijd3N","religion", "sex", "Filltime",
+                "VS5b_1", "VS5b_2", "VS5b_o", "region", "Country", "country_code", "score", "rank")
+df_es <- select(df_es, setdiff(names(df_es), unadjusted_cols))
+
+# Congruence and country-specific variables
+cong_country_cols <- c("cong_country_PKBD", "cong_n_countries", "V001caHUNCZ", 
+                            "V001caHUNCZ_o", "V001caUK_1", "V001caUK_2")
+df_es <- select(df_es, setdiff(names(df_es), cong_country_cols))
+
+# Observations ----------------------------------------------
+
+df_es <- 
+    df_es |> 
+        filter(!country_name %in% c(
+            "Bangladesh", "Black Caribbean",
+            "Dutch Antilles", "Surinam",
+            "Irish traveller"
+        ))
+
+
+###############################################################################
+# 8) Renaming columns  ########################################################
+
+country_cols <- paste0("V001c_", 1:51)
+
+country_labels <- map_vec(country_cols, ~paste0("V001c_", gsub(" ", "", attributes(df_es[[.x]])$label)))
+
+df_es <- df_es |> rename_with(~all_of(country_labels), all_of(country_cols))
+
+names(df_es) <- gsub("\\W+", "", names(df_es))
+
+
+###############################################################################
+# 9) Exporting files  ########################################################
 ###############################################################################
 run_date <- Sys.Date()
 
 write_sav(df_es, paste0("./data/ES2_NameSurvey_", run_date, ".sav"))
 write_dta(df_es, paste0("./data/ES2_NameSurvey_", run_date, ".dta"))
 saveRDS(df_es, paste0("./data/ES2_NameSurvey_", run_date, ".RDS"))
+

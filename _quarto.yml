@@ -8,7 +8,7 @@ book:
   chapters:
     - index.qmd
     - quality.qmd
-    - selection.qmd
+#    - selection.qmd
     - results.qmd
   search: true
   repo-url: https://github.com/equalstrength/NameSurvey

@@ -7,7 +7,12 @@ from: markdown+emoji
 
 ```{r}
 # Import packages and working dataset
-source("WorkingDF.R")
+library(tidyverse)
+library(haven)
+library(plotly)
+library(gt)
+
+df_es <- readRDS("./data/ES2_NameSurvey_2025-01-24.RDS")
 ```
 
 ## Repetition 
@@ -20,8 +25,7 @@ df_es |>
   mutate(
     Sex_DK = if_else(as.numeric(V001a) == 4, 1, 0),
     Region_DK = if_else(as.numeric(V001b) == 9, 1, 0),
-    Religion_DK = if_else(as.numeric(V001e) == 7, 1, 0),
-    Skin_DK = if_else(round == 2 & as.numeric(V001db) == 11, 1, 0)) |>
+    Religion_DK = if_else(as.numeric(V001e) == 7, 1, 0)) |>
   group_by(country_survey, id) |>
   summarise(across(ends_with("DK"), mean),.groups = 'drop') |>
   group_by(country_survey) |>
@@ -57,6 +61,11 @@ Here we check the difference in response pattern based on the **respondent's** d
 ```{r}
 #| tbl-cap: Average region congruence rate for Nigerian names by country and respondent's characteristics. 
 #| label: tbl-dem
+
+# Get weighted mean using the survey weight variable
+get_mean <- function(var_es, wgt_es){
+    weighted.mean({{var_es}}, w = {{wgt_es}}, na.rm = TRUE)
+}
 
 df_es <- 
   df_es |>
@@ -98,9 +107,9 @@ The results below are based on data from the second round only and exclude 781 o
 #| label: tbl-time
 
 df_es |>
-  filter(!is.na(Filltime) & Filltime < 300) |>
+  filter(!is.na(Filltime_Total) & Filltime_Total < 300) |>
   group_by(country_survey, region_es, id) |>
-  summarise(time_id = mean(Filltime), .groups = 'drop') |>
+  summarise(time_id = mean(Filltime_Total), .groups = 'drop') |>
   group_by(country_survey, region_es) |>
   summarise(mean = mean(time_id), median = median(time_id),
             .groups = "drop") |>
@@ -116,8 +125,8 @@ df_es |>
 #| label: fig-time
 
 df_es |>
-  filter(!is.na(Filltime) & Filltime < 300) |>
-  ggplot(aes(x = Filltime)) +
+  filter(!is.na(Filltime_Total) & Filltime_Total < 300) |>
+  ggplot(aes(x = Filltime_Total)) +
   geom_histogram(bins =  100) +
   facet_wrap(~country_survey) +
   theme_classic()
@@ -129,9 +138,9 @@ df_es |>
 #| label: tbl-quick
 
 df_es |>
-  filter(!is.na(Filltime) & Filltime < 300) |>
+  filter(!is.na(Filltime_Total) & Filltime_Total < 300) |>
   group_by(country_survey, id) |>
-  summarise(time_id = mean(Filltime), .groups = 'drop') |>
+  summarise(time_id = mean(Filltime_Total), .groups = 'drop') |>
   group_by(country_survey) |>
   summarise(less_30 = sum(if_else(time_id < 30, 1, 0)),
             less_45 = sum(if_else(time_id < 45, 1, 0))) |>

@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Name Survey",
     "section": "",
-    "text": "1 Processing data\nThe file ProcessData.R contains the code for processing the data, which involved the following steps:",
+    "text": "1 Processing data\nThe file 1_process.R contains the code for processing the data, which involved the following steps:",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Processing data</span>"
     ]
@@ -14,7 +14,7 @@
     "href": "index.html#final-dataset",
     "title": "Name Survey",
     "section": "1.1 Final dataset",
-    "text": "1.1 Final dataset\nThe code below reads the exported dataset in RDS format. The SPSS .sav and STATA .dat files are also available on pCloud.\n\n\nCode\n# Import packages and working dataset\nsource(\"WorkingDF.R\")\n\n\nTable 1.1 shows the total number of observations (tests) for each country as well as the number of names tested.\n\n\nCode\ndf_es |&gt; \n    group_by(country_survey) |&gt;\n    summarise(Names = n_distinct(Name),\n              Tests = n()) |&gt;\n    gt()\n\n\n\n\nTable 1.1: Total number of distinct names tested and tests by country\n\n\n\n\n\n\n\n\n\n\ncountry_survey\nNames\nTests\n\n\n\n\nBelgium\n112\n8000\n\n\nCzech Republic\n32\n6400\n\n\nGermany\n133\n8990\n\n\nHungary\n40\n3000\n\n\nIreland\n131\n9000\n\n\nSpain\n144\n5120\n\n\nSwitzerland\n180\n24000\n\n\nThe Netherlands\n151\n10300\n\n\nUK\n155\n10290",
+    "text": "1.1 Final dataset\nThe code below reads the exported dataset in RDS format. The SPSS .sav and STATA .dat files are also available on the data subdirectory.\n\n\nCode\n# Import packages and working dataset\nlibrary(tidyverse)\nlibrary(haven)\nlibrary(plotly)\nlibrary(gt)\n\ndf_es &lt;- readRDS(\"./data/ES2_NameSurvey_2025-01-24.RDS\")\n\n\nTable 1.1 shows the total number of observations (tests) for each country as well as the number of names tested.\n\n\nCode\ndf_es |&gt; \n    group_by(country_survey) |&gt;\n    summarise(Names = n_distinct(Name),\n              Tests = n()) |&gt;\n    gt()\n\n\n\n\nTable 1.1: Total number of distinct names tested and tests by country\n\n\n\n\n\n\n\n\n\ncountry_survey\nNames\nTests\n\n\n\n\nBelgium\n112\n8000\n\n\nCzech Republic\n32\n6400\n\n\nGermany\n133\n8990\n\n\nHungary\n40\n3000\n\n\nIreland\n115\n7879\n\n\nSpain\n144\n5120\n\n\nSwitzerland\n180\n24000\n\n\nThe Netherlands\n119\n8101\n\n\nUK\n131\n8644",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Processing data</span>"
     ]
@@ -24,7 +24,7 @@
     "href": "quality.html",
     "title": "2  Quality checks",
     "section": "",
-    "text": "2.1 Repetition\nCode\ndf_es |&gt;\n  mutate(\n    Sex_DK = if_else(as.numeric(V001a) == 4, 1, 0),\n    Region_DK = if_else(as.numeric(V001b) == 9, 1, 0),\n    Religion_DK = if_else(as.numeric(V001e) == 7, 1, 0),\n    Skin_DK = if_else(round == 2 & as.numeric(V001db) == 11, 1, 0)) |&gt;\n  group_by(country_survey, id) |&gt;\n  summarise(across(ends_with(\"DK\"), mean),.groups = 'drop') |&gt;\n  group_by(country_survey) |&gt;\n  summarise(across(ends_with(\"DK\"), ~sum(.x == 1)), .groups = 'drop') |&gt;\n  gt() |&gt;\n  cols_label_with(fn =  ~str_remove(., \"_DK\"))\n\n\n\n\nTable 2.1: Absolute number of respondents who answered “Don’t know” for all 10 names.\n\n\n\n\n\n\n\n\n\n\ncountry_survey\nSex\nRegion\nReligion\nSkin\n\n\n\n\nBelgium\n5\n14\n55\n7\n\n\nCzech Republic\n0\nNA\n29\n3\n\n\nGermany\n1\n10\n42\n9\n\n\nHungary\n0\nNA\n20\n3\n\n\nIreland\n0\n6\n24\n1\n\n\nSpain\n0\n0\n0\nNA\n\n\nSwitzerland\n1\n28\n103\n28\n\n\nThe Netherlands\n2\n13\n52\n12\n\n\nUK\n5\n36\n73\n24\nCode\ndf_es |&gt;\n  group_by(country_survey, id) |&gt;\n  summarise(across(c(\"V001a\", \"V001b\", \"V001e\"), n_distinct),.groups = 'drop') |&gt;\n  group_by(country_survey) |&gt;\n  summarise(across(c(\"V001a\", \"V001b\", \"V001e\"), ~sum(.x == 1)), .groups = 'drop') |&gt;\n  gt() |&gt;\n  cols_label(V001a = \"Sex\", V001b = \"Region\", V001e = \"Religion\")\n\n\n\n\nTable 2.2: Absolute number of respondents who repeated the same answer for all 10 names.\n\n\n\n\n\n\n\n\n\n\ncountry_survey\nSex\nRegion\nReligion\n\n\n\n\nBelgium\n7\n14\n57\n\n\nCzech Republic\n1\n640\n89\n\n\nGermany\n6\n10\n45\n\n\nHungary\n0\n300\n78\n\n\nIreland\n6\n7\n26\n\n\nSpain\n0\n0\n0\n\n\nSwitzerland\n19\n30\n110\n\n\nThe Netherlands\n5\n13\n53\n\n\nUK\n9\n38\n74",
+    "text": "2.1 Repetition\nCode\ndf_es |&gt;\n  mutate(\n    Sex_DK = if_else(as.numeric(V001a) == 4, 1, 0),\n    Region_DK = if_else(as.numeric(V001b) == 9, 1, 0),\n    Religion_DK = if_else(as.numeric(V001e) == 7, 1, 0)) |&gt;\n  group_by(country_survey, id) |&gt;\n  summarise(across(ends_with(\"DK\"), mean),.groups = 'drop') |&gt;\n  group_by(country_survey) |&gt;\n  summarise(across(ends_with(\"DK\"), ~sum(.x == 1)), .groups = 'drop') |&gt;\n  gt() |&gt;\n  cols_label_with(fn =  ~str_remove(., \"_DK\"))\n\n\n\n\nTable 2.1: Absolute number of respondents who answered “Don’t know” for all 10 names.\n\n\n\n\n\n\n\n\n\ncountry_survey\nSex\nRegion\nReligion\n\n\n\n\nBelgium\n5\n14\n55\n\n\nCzech Republic\n0\nNA\n29\n\n\nGermany\n1\n10\n42\n\n\nHungary\n0\nNA\n20\n\n\nIreland\n0\n8\n28\n\n\nSpain\n0\n0\n0\n\n\nSwitzerland\n1\n28\n103\n\n\nThe Netherlands\n6\n20\n58\n\n\nUK\n8\n40\n83\nCode\ndf_es |&gt;\n  group_by(country_survey, id) |&gt;\n  summarise(across(c(\"V001a\", \"V001b\", \"V001e\"), n_distinct),.groups = 'drop') |&gt;\n  group_by(country_survey) |&gt;\n  summarise(across(c(\"V001a\", \"V001b\", \"V001e\"), ~sum(.x == 1)), .groups = 'drop') |&gt;\n  gt() |&gt;\n  cols_label(V001a = \"Sex\", V001b = \"Region\", V001e = \"Religion\")\n\n\n\n\nTable 2.2: Absolute number of respondents who repeated the same answer for all 10 names.\n\n\n\n\n\n\n\n\n\ncountry_survey\nSex\nRegion\nReligion\n\n\n\n\nBelgium\n7\n14\n57\n\n\nCzech Republic\n1\n640\n89\n\n\nGermany\n6\n10\n45\n\n\nHungary\n0\n300\n78\n\n\nIreland\n9\n9\n32\n\n\nSpain\n0\n0\n0\n\n\nSwitzerland\n19\n30\n110\n\n\nThe Netherlands\n13\n21\n63\n\n\nUK\n18\n42\n87",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quality checks</span>"
     ]
@@ -34,7 +34,7 @@
     "href": "quality.html#demographics",
     "title": "2  Quality checks",
     "section": "2.2 Demographics",
-    "text": "2.2 Demographics\nHere we check the difference in response pattern based on the respondent’s demographic variables. The table below show the average region congruence rates for Nigerian names.\n\n\nCode\ndf_es &lt;- \n  df_es |&gt;\n  mutate(resp_sex = case_match(VS1, 1 ~ \"Male\", 2 ~ \"Female\", .default = NA),\n          resp_edu = case_match(VS3, 1 ~ \"No higher\", 2 ~ \"Higher\", .default = NA),\n          resp_age = case_when(VS2 &lt; 25 ~ \"18-24\", VS2 &gt; 24 & VS2 &lt; 46 ~ \"25-45\", VS2 &gt; 45 ~ \"46+\")) \n\ncompare_cong &lt;- function(country, group_comp){\n  df_es |&gt; \n    filter(country_name == country) |&gt;\n    group_by(country_survey, Name, group = get(group_comp)) |&gt;\n    summarise(region = get_mean(cong_region, Weging), .groups = 'drop') |&gt;\n    filter(!is.na(group)) |&gt;\n    group_by(country_survey, group) |&gt;\n    summarise(mean = mean(region), .groups = 'drop') |&gt;\n    pivot_wider(names_from = group, values_from = mean)\n}\n\ncompare_cong(\"Nigeria\", \"resp_sex\") |&gt;\n  left_join(compare_cong(\"Nigeria\", \"resp_edu\")) |&gt;\n  left_join(compare_cong(\"Nigeria\", \"resp_age\")) |&gt;\ngt() |&gt; \nfmt_percent(decimals = 0) |&gt;\nsub_missing() |&gt;\ntab_spanner(label = \"Sex\", columns = c(\"Female\", \"Male\")) |&gt;\ntab_spanner(label = \"Education\", columns = c(\"Higher\", \"No higher\")) |&gt;\ntab_spanner(label = \"Age group\", columns = c(\"18-24\", \"25-45\", \"46+\"))\n\n\n\n\nTable 2.3: Average region congruence rate for Nigerian names by country and respondent’s characteristics.\n\n\n\n\n\n\n\n\n\n\ncountry_survey\nSex\nEducation\nAge group\n\n\nFemale\nMale\nHigher\nNo higher\n18-24\n25-45\n46+\n\n\n\n\nBelgium\n14%\n21%\n20%\n19%\n14%\n18%\n19%\n\n\nGermany\n31%\n36%\n31%\n37%\n24%\n33%\n35%\n\n\nIreland\n29%\n37%\n26%\n33%\n28%\n33%\n34%\n\n\nSpain\n7%\n17%\n11%\n13%\n11%\n9%\n15%\n\n\nSwitzerland\n32%\n36%\n36%\n33%\n34%\n36%\n33%\n\n\nThe Netherlands\n27%\n31%\n23%\n26%\n21%\n32%\n30%\n\n\nUK\n34%\n39%\n32%\n27%\n22%\n35%\n40%",
+    "text": "2.2 Demographics\nHere we check the difference in response pattern based on the respondent’s demographic variables. The table below show the average region congruence rates for Nigerian names.\n\n\nCode\n# Get weighted mean using the survey weight variable\nget_mean &lt;- function(var_es, wgt_es){\n    weighted.mean({{var_es}}, w = {{wgt_es}}, na.rm = TRUE)\n}\n\ndf_es &lt;- \n  df_es |&gt;\n  mutate(resp_sex = case_match(VS1, 1 ~ \"Male\", 2 ~ \"Female\", .default = NA),\n          resp_edu = case_match(VS3, 1 ~ \"No higher\", 2 ~ \"Higher\", .default = NA),\n          resp_age = case_when(VS2 &lt; 25 ~ \"18-24\", VS2 &gt; 24 & VS2 &lt; 46 ~ \"25-45\", VS2 &gt; 45 ~ \"46+\")) \n\ncompare_cong &lt;- function(country, group_comp){\n  df_es |&gt; \n    filter(country_name == country) |&gt;\n    group_by(country_survey, Name, group = get(group_comp)) |&gt;\n    summarise(region = get_mean(cong_region, Weging), .groups = 'drop') |&gt;\n    filter(!is.na(group)) |&gt;\n    group_by(country_survey, group) |&gt;\n    summarise(mean = mean(region), .groups = 'drop') |&gt;\n    pivot_wider(names_from = group, values_from = mean)\n}\n\ncompare_cong(\"Nigeria\", \"resp_sex\") |&gt;\n  left_join(compare_cong(\"Nigeria\", \"resp_edu\")) |&gt;\n  left_join(compare_cong(\"Nigeria\", \"resp_age\")) |&gt;\ngt() |&gt; \nfmt_percent(decimals = 0) |&gt;\nsub_missing() |&gt;\ntab_spanner(label = \"Sex\", columns = c(\"Female\", \"Male\")) |&gt;\ntab_spanner(label = \"Education\", columns = c(\"Higher\", \"No higher\")) |&gt;\ntab_spanner(label = \"Age group\", columns = c(\"18-24\", \"25-45\", \"46+\"))\n\n\n\n\nTable 2.3: Average region congruence rate for Nigerian names by country and respondent’s characteristics.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ncountry_survey\n\nSex\n\n\nEducation\n\n\nAge group\n\n\n\nFemale\nMale\nHigher\nNo higher\n18-24\n25-45\n46+\n\n\n\n\nBelgium\n14%\n21%\n20%\n19%\n14%\n18%\n19%\n\n\nGermany\n31%\n36%\n31%\n37%\n24%\n33%\n35%\n\n\nIreland\n29%\n37%\n26%\n33%\n28%\n33%\n34%\n\n\nSpain\n7%\n17%\n11%\n13%\n11%\n9%\n15%\n\n\nSwitzerland\n32%\n36%\n36%\n33%\n34%\n36%\n33%\n\n\nThe Netherlands\n27%\n31%\n23%\n26%\n21%\n32%\n30%\n\n\nUK\n34%\n39%\n32%\n27%\n22%\n35%\n40%",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quality checks</span>"
     ]
@@ -44,7 +44,7 @@
     "href": "quality.html#time",
     "title": "2  Quality checks",
     "section": "2.3 Time",
-    "text": "2.3 Time\n\n\n\n\n\n\nImportant\n\n\n\nThe results below are based on data from the second round only and exclude 781 observations for which time is higher than 300 seconds.\n\n\n\n\nCode\ndf_es |&gt;\n  filter(!is.na(Filltime) & Filltime &lt; 300) |&gt;\n  group_by(country_survey, region_es, id) |&gt;\n  summarise(time_id = mean(Filltime), .groups = 'drop') |&gt;\n  group_by(country_survey, region_es) |&gt;\n  summarise(mean = mean(time_id), median = median(time_id),\n            .groups = \"drop\") |&gt;\n  gt()  |&gt;\n  fmt_number(decimals = 2) |&gt;\n  opt_interactive(use_filters = TRUE, use_page_size_select = TRUE)\n\n\n\n\nTable 2.4: Mean value of time (in seconds) spent per name for each group\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCode\ndf_es |&gt;\n  filter(!is.na(Filltime) & Filltime &lt; 300) |&gt;\n  ggplot(aes(x = Filltime)) +\n  geom_histogram(bins =  100) +\n  facet_wrap(~country_survey) +\n  theme_classic()\n\n\n\n\n\n\n\n\nFigure 2.1: Distribution of time spent for each name\n\n\n\n\n\n\n\nCode\ndf_es |&gt;\n  filter(!is.na(Filltime) & Filltime &lt; 300) |&gt;\n  group_by(country_survey, id) |&gt;\n  summarise(time_id = mean(Filltime), .groups = 'drop') |&gt;\n  group_by(country_survey) |&gt;\n  summarise(less_30 = sum(if_else(time_id &lt; 30, 1, 0)),\n            less_45 = sum(if_else(time_id &lt; 45, 1, 0))) |&gt;\n  gt()\n\n\n\n\nTable 2.5: Number of respondents who, on average, took less than 30 / 45 seconds to complete a name\n\n\n\n\n\n\n\n\n\n\ncountry_survey\nless_30\nless_45\n\n\n\n\nBelgium\n34\n163\n\n\nCzech Republic\n22\n109\n\n\nGermany\n21\n127\n\n\nHungary\n10\n62\n\n\nIreland\n28\n188\n\n\nSwitzerland\n36\n238\n\n\nThe Netherlands\n35\n217\n\n\nUK\n24\n82",
+    "text": "2.3 Time\n\n\n\n\n\n\nImportant\n\n\n\nThe results below are based on data from the second round only and exclude 781 observations for which time is higher than 300 seconds.\n\n\n\n\nCode\ndf_es |&gt;\n  filter(!is.na(Filltime_Total) & Filltime_Total &lt; 300) |&gt;\n  group_by(country_survey, region_es, id) |&gt;\n  summarise(time_id = mean(Filltime_Total), .groups = 'drop') |&gt;\n  group_by(country_survey, region_es) |&gt;\n  summarise(mean = mean(time_id), median = median(time_id),\n            .groups = \"drop\") |&gt;\n  gt()  |&gt;\n  fmt_number(decimals = 2) |&gt;\n  opt_interactive(use_filters = TRUE, use_page_size_select = TRUE)\n\n\n\n\nTable 2.4: Mean value of time (in seconds) spent per name for each group\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCode\ndf_es |&gt;\n  filter(!is.na(Filltime_Total) & Filltime_Total &lt; 300) |&gt;\n  ggplot(aes(x = Filltime_Total)) +\n  geom_histogram(bins =  100) +\n  facet_wrap(~country_survey) +\n  theme_classic()\n\n\n\n\n\n\n\n\nFigure 2.1: Distribution of time spent for each name\n\n\n\n\n\n\n\nCode\ndf_es |&gt;\n  filter(!is.na(Filltime_Total) & Filltime_Total &lt; 300) |&gt;\n  group_by(country_survey, id) |&gt;\n  summarise(time_id = mean(Filltime_Total), .groups = 'drop') |&gt;\n  group_by(country_survey) |&gt;\n  summarise(less_30 = sum(if_else(time_id &lt; 30, 1, 0)),\n            less_45 = sum(if_else(time_id &lt; 45, 1, 0))) |&gt;\n  gt()\n\n\n\n\nTable 2.5: Number of respondents who, on average, took less than 30 / 45 seconds to complete a name\n\n\n\n\n\n\n\n\n\ncountry_survey\nless_30\nless_45\n\n\n\n\nBelgium\n0\n0\n\n\nCzech Republic\n0\n0\n\n\nGermany\n0\n0\n\n\nHungary\n0\n0\n\n\nIreland\n0\n0\n\n\nSwitzerland\n0\n0\n\n\nThe Netherlands\n0\n0\n\n\nUK\n0\n0",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quality checks</span>"
     ]
@@ -102,101 +102,101 @@
   {
     "objectID": "results.html",
     "href": "results.html",
-    "title": "4  Results by country",
+    "title": "3  Results by country",
     "section": "",
-    "text": "5 Results by country\nCode\n# Function to get congruence rates for specific variables and countries\nget_rank &lt;- function(country, ...){\n\n    selected_vars &lt;- c(...)\n\n    tb_country &lt;- \n      df_es |&gt;\n        group_by(country_survey, country_name, Name) |&gt;\n        summarise(across(all_of(selected_vars), ~get_mean(., Weging)), .groups = 'drop') |&gt;\n        filter(country_survey == country) |&gt;\n        arrange(country_name, rank)\n\n    openxlsx::write.xlsx(tb_country, file = paste0(\"./data/rankings/\", country, \".xlsx\"))\n\n    gt(tb_country) |&gt; \n      fmt_percent(decimals = 0) |&gt;\n      fmt_number(columns = rank, decimals = 0) |&gt;\n      fmt_number(columns = score, decimals = 2) |&gt;\n      sub_missing() |&gt;\n      cols_label_with(fn =  ~str_remove(., \"cong_|_adj\")) |&gt;\n      opt_interactive(use_filters = TRUE, use_page_size_select = TRUE)\n  }\n\ncountry_variables &lt;- c(\"rank\", \"score\", \"cong_sex\", \"cong_religion\", \"skin_adj\", \"cong_country\", \"cong_region\", \"ladder_adj\", \"cong_ethn\")",
+    "text": "4 Results by country\nCode\n# Function to get congruence rates for specific variables and countries\nget_rank &lt;- function(country, ...){\n\n    selected_vars &lt;- c(...)\n\n    tb_country &lt;- \n      df_es |&gt;\n        group_by(country_survey, country_name, Name) |&gt;\n        summarise(across(all_of(selected_vars), ~get_mean(., Weging)), .groups = 'drop') |&gt;\n        filter(country_survey == country) |&gt;\n        arrange(country_name)\n\n    openxlsx::write.xlsx(tb_country, file = paste0(\"./data/rankings/\", country, \".xlsx\"))\n\n    gt(tb_country) |&gt; \n      fmt_percent(decimals = 0) |&gt;\n      sub_missing() |&gt;\n      cols_label_with(fn =  ~str_remove(., \"cong_|_adj\")) |&gt;\n      opt_interactive(use_filters = TRUE, use_page_size_select = TRUE)\n  }\n\ncountry_variables &lt;- c(\"cong_sex\", \"skin_adj\", \"cong_country\", \"cong_region\", \"ladder_adj\", \"religiosity\")",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Results by country</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results by country</span>"
     ]
   },
   {
     "objectID": "results.html#belgium",
     "href": "results.html#belgium",
-    "title": "4  Results by country",
-    "section": "5.1 Belgium",
-    "text": "5.1 Belgium\n\n\nCode\nget_rank(\"Belgium\", country_variables)",
+    "title": "3  Results by country",
+    "section": "4.1 Belgium",
+    "text": "4.1 Belgium\n\n\nCode\nget_rank(\"Belgium\", country_variables)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Results by country</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results by country</span>"
     ]
   },
   {
     "objectID": "results.html#czech-republic",
     "href": "results.html#czech-republic",
-    "title": "4  Results by country",
-    "section": "5.2 Czech Republic",
-    "text": "5.2 Czech Republic\n\n\nCode\nget_rank(\"Czech Republic\", country_variables)",
+    "title": "3  Results by country",
+    "section": "4.2 Czech Republic",
+    "text": "4.2 Czech Republic\n\n\nCode\nget_rank(\"Czech Republic\", country_variables)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Results by country</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results by country</span>"
     ]
   },
   {
     "objectID": "results.html#germany",
     "href": "results.html#germany",
-    "title": "4  Results by country",
-    "section": "5.3 Germany",
-    "text": "5.3 Germany\n\n\nCode\nget_rank(\"Germany\", country_variables)",
+    "title": "3  Results by country",
+    "section": "4.3 Germany",
+    "text": "4.3 Germany\n\n\nCode\nget_rank(\"Germany\", country_variables)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Results by country</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results by country</span>"
     ]
   },
   {
     "objectID": "results.html#hungary",
     "href": "results.html#hungary",
-    "title": "4  Results by country",
-    "section": "5.4 Hungary",
-    "text": "5.4 Hungary\n\n\nCode\nget_rank(\"Hungary\", country_variables)",
+    "title": "3  Results by country",
+    "section": "4.4 Hungary",
+    "text": "4.4 Hungary\n\n\nCode\nget_rank(\"Hungary\", country_variables)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Results by country</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results by country</span>"
     ]
   },
   {
     "objectID": "results.html#ireland",
     "href": "results.html#ireland",
-    "title": "4  Results by country",
-    "section": "5.5 Ireland",
-    "text": "5.5 Ireland\n\n\nCode\nget_rank(\"Ireland\", country_variables)",
+    "title": "3  Results by country",
+    "section": "4.5 Ireland",
+    "text": "4.5 Ireland\n\n\nCode\nget_rank(\"Ireland\", country_variables)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Results by country</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results by country</span>"
     ]
   },
   {
     "objectID": "results.html#netherlands",
     "href": "results.html#netherlands",
-    "title": "4  Results by country",
-    "section": "5.6 Netherlands",
-    "text": "5.6 Netherlands\n\n\nCode\nget_rank(\"The Netherlands\", country_variables)",
+    "title": "3  Results by country",
+    "section": "4.6 Netherlands",
+    "text": "4.6 Netherlands\n\n\nCode\nget_rank(\"The Netherlands\", country_variables)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Results by country</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results by country</span>"
     ]
   },
   {
     "objectID": "results.html#spain",
     "href": "results.html#spain",
-    "title": "4  Results by country",
-    "section": "5.7 Spain",
-    "text": "5.7 Spain\n\n\nCode\nget_rank(\"Spain\", country_variables)",
+    "title": "3  Results by country",
+    "section": "4.7 Spain",
+    "text": "4.7 Spain\n\n\nCode\nget_rank(\"Spain\", country_variables)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Results by country</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results by country</span>"
     ]
   },
   {
     "objectID": "results.html#switzerland",
     "href": "results.html#switzerland",
-    "title": "4  Results by country",
-    "section": "5.8 Switzerland",
-    "text": "5.8 Switzerland\n\n\nCode\nget_rank(\"Switzerland\", country_variables)",
+    "title": "3  Results by country",
+    "section": "4.8 Switzerland",
+    "text": "4.8 Switzerland\n\n\nCode\nget_rank(\"Switzerland\", country_variables)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Results by country</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results by country</span>"
     ]
   },
   {
     "objectID": "results.html#uk",
     "href": "results.html#uk",
-    "title": "4  Results by country",
-    "section": "5.9 UK",
-    "text": "5.9 UK\n\n\nCode\nget_rank(\"UK\", country_variables)",
+    "title": "3  Results by country",
+    "section": "4.9 UK",
+    "text": "4.9 UK\n\n\nCode\nget_rank(\"UK\", country_variables)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Results by country</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results by country</span>"
     ]
   }
 ]
